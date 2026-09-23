@@ -195,3 +195,4 @@ The project comes pre-seeded with test accounts for all 3 system actors:
 6. View registered users, station owners, all system bookings, and delete unwanted reviews.
 "# Ev_charging_station_finder" 
 "# Ev_charging_station_finder" 
+"# Ev_charging_station" 
