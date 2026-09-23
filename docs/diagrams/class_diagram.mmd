@@ -1,0 +1,105 @@
+classDiagram
+    class DBConnection {
+        -String DB_URL
+        -String DB_USER
+        -String DB_PASSWORD
+        +getConnection() Connection
+        +closeConnection(Connection conn)
+    }
+
+    class User {
+        -int id
+        -String name
+        -String email
+        -String password
+        -String phone
+        -String vehicleNumber
+        -String vehicleModel
+        -String status
+        +getId() int
+        +getName() String
+    }
+
+    class StationOwner {
+        -int id
+        -String name
+        -String email
+        -String password
+        -String phone
+        -String businessName
+        -String address
+        -String status
+    }
+
+    class Station {
+        -int id
+        -int ownerId
+        -String name
+        -String address
+        -String city
+        -String chargerTypes
+        -String powerRating
+        -BigDecimal pricePerUnit
+        -int totalSlots
+        -String approvalStatus
+    }
+
+    class ChargingSlot {
+        -int id
+        -int stationId
+        -String slotNumber
+        -String chargerType
+        -String powerOutput
+        -String status
+    }
+
+    class Booking {
+        -int id
+        -String bookingNumber
+        -int userId
+        -int stationId
+        -int slotId
+        -Date bookingDate
+        -String startTime
+        -String endTime
+        -BigDecimal totalAmount
+        -BigDecimal discountAmount
+        -BigDecimal finalAmount
+        -String status
+    }
+
+    class Payment {
+        -int id
+        -int bookingId
+        -int userId
+        -String transactionId
+        -String paymentMethod
+        -BigDecimal amount
+        -String paymentStatus
+    }
+
+    class Coupon {
+        -int id
+        -String code
+        -int discountPercentage
+        -BigDecimal maxDiscount
+        -BigDecimal minAmount
+        -boolean active
+    }
+
+    class Review {
+        -int id
+        -int stationId
+        -int userId
+        -int rating
+        -String reviewText
+    }
+
+    StationOwner "1" --> "*" Station : owns
+    Station "1" --> "*" ChargingSlot : contains
+    User "1" --> "*" Booking : reserves
+    Station "1" --> "*" Booking : hosted_at
+    ChargingSlot "1" --> "*" Booking : allocated_to
+    Booking "1" --> "1" Payment : paid_by
+    User "1" --> "*" Review : writes
+    Station "1" --> "*" Review : reviewed_in

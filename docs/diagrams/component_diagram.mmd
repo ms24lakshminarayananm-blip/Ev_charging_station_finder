@@ -1,0 +1,38 @@
+graph TD
+    subgraph "View Layer (JSP / CSS / JS)"
+        V1["index.jsp / login.jsp / register.jsp"]
+        V2["User JSPs (dashboard, search, book, payment)"]
+        V3["Owner JSPs (dashboard, add, manage, live-status)"]
+        V4["Admin JSPs (dashboard, stations, users, reviews)"]
+        V5["style.css & main.js"]
+    end
+
+    subgraph "Controller Layer (Java Servlets)"
+        C1["Auth Servlets (Login, Register, Logout)"]
+        C2["User Servlets (StationSearch, Booking, Payment, Coupon, Review)"]
+        C3["Owner Servlets (AddStation, UpdateStation, OwnerPortal)"]
+        C4["Admin Servlets (ApproveStation, RejectStation, ManageUsers, ManageReviews)"]
+    end
+
+    subgraph "Model Layer (JavaBeans)"
+        M1["User, StationOwner, Admin"]
+        M2["Station, ChargingSlot, Booking, WaitingList"]
+        M3["Payment, Coupon, Review"]
+    end
+
+    subgraph "Data Access Layer (JDBC DAOs)"
+        D1["UserDAO, OwnerDAO, AdminDAO"]
+        D2["StationDAO, SlotDAO, BookingDAO, WaitingListDAO"]
+        D3["PaymentDAO, CouponDAO, ReviewDAO"]
+        D4["DBConnection Utility"]
+    end
+
+    subgraph "Database Layer (MySQL)"
+        DB[("ev_charging_db<br/>(10 Relational Tables)")]
+    end
+
+    ViewLayer --> ControllerLayer
+    ControllerLayer --> ModelLayer
+    ControllerLayer --> DataAccessLayer
+    DataAccessLayer --> ModelLayer
+    DataAccessLayer --> DB

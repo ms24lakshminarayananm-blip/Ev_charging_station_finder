@@ -1,0 +1,46 @@
+graph TD
+    User["👤 EV User"]
+    Owner["🏢 Station Owner"]
+    Admin["🛡️ System Admin"]
+
+    subgraph "EV Charging Station Finder System"
+        UC1((Register / Login))
+        UC2((Search & Filter Stations))
+        UC3((View Station & Slot Details))
+        UC4((Book Charging Slot))
+        UC5((Join Waiting List))
+        UC6((Simulated Payment & Apply Coupon))
+        UC7((Cancel Booking))
+        UC8((Give Rating & Review))
+
+        UC9((Add Charging Station))
+        UC10((Update Station & Pricing))
+        UC11((Monitor Live Slot Status))
+        UC12((View Station Bookings))
+
+        UC13((Approve / Reject Station))
+        UC14((Manage Users & Owners))
+        UC15((Manage / Delete Reviews))
+        UC16((View Dashboard Analytics))
+    end
+
+    User --> UC1
+    User --> UC2
+    User --> UC3
+    User --> UC4
+    User --> UC5
+    User --> UC6
+    User --> UC7
+    User --> UC8
+
+    Owner --> UC1
+    Owner --> UC9
+    Owner --> UC10
+    Owner --> UC11
+    Owner --> UC12
+
+    Admin --> UC1
+    Admin --> UC13
+    Admin --> UC14
+    Admin --> UC15
+    Admin --> UC16

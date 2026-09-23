@@ -1,0 +1,11 @@
+stateDiagram-v2
+    [*] --> INITIATED: User selects slot & begins checkout
+    INITIATED --> PENDING_PAYMENT: Slot locked for checkout
+    PENDING_PAYMENT --> BOOKED: Simulated payment completed successfully
+    PENDING_PAYMENT --> [*]: Session timeout or abandoned
+
+    BOOKED --> CANCELLED: User initiates booking cancellation
+    BOOKED --> COMPLETED: Charging session time expired / car charged
+
+    CANCELLED --> [*]: Slot released back to available pool
+    COMPLETED --> [*]: Booking archived in user history

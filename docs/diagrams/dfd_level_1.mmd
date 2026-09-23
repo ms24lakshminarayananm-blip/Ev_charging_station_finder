@@ -1,0 +1,43 @@
+graph TD
+    User["EV User"]
+    Owner["Station Owner"]
+    Admin["System Admin"]
+
+    P1["1.0 Authentication & User Profiling"]
+    P2["2.0 Station Discovery & Filtering"]
+    P3["3.0 Slot Reservation & Waiting Queue"]
+    P4["4.0 Payment Simulation & Coupon Engine"]
+    P5["5.0 Station Governance & Approval"]
+    P6["6.0 Reviews & Ratings Moderation"]
+
+    D1[("D1: Users & Owners")]
+    D2[("D2: Stations & Slots")]
+    D3[("D3: Bookings & WaitingList")]
+    D4[("D4: Payments & Coupons")]
+    D5[("D5: Reviews")]
+
+    User --> P1
+    Owner --> P1
+    Admin --> P1
+    P1 <--> D1
+
+    User --> P2
+    D2 --> P2
+    P2 --> User
+
+    User --> P3
+    P3 <--> D2
+    P3 <--> D3
+    P3 --> P4
+
+    P4 <--> D4
+    P4 --> D3
+    P4 --> User
+
+    Owner --> P5
+    Admin --> P5
+    P5 <--> D2
+
+    User --> P6
+    Admin --> P6
+    P6 <--> D5

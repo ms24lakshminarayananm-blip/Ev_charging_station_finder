@@ -1,0 +1,21 @@
+graph TD
+    subgraph "Client Tier (End User Machine)"
+        Browser["Web Browser (Chrome / Edge / Firefox)<br/>HTML5, CSS3, JavaScript"]
+    end
+
+    subgraph "Application Tier (Apache Tomcat 9.0 Web Server)"
+        Tomcat["Tomcat 9 Web Container (Port 8080)<br/>Java Servlet Engine & JSP Translator"]
+        WAR["evcharging.war Web Application<br/>Context: /evcharging"]
+        JVM["Java Virtual Machine (JDK 8 / 11 / 17 / 21 / 24)"]
+        JDBCDriver["MySQL Connector/J (JDBC Driver)"]
+    end
+
+    subgraph "Database Tier (Database Server)"
+        MySQL["MySQL Database Server 8.0 (Port 3306)<br/>Database: ev_charging_db"]
+    end
+
+    Browser -- "HTTP / HTTPS Requests (Port 8080)" --> Tomcat
+    Tomcat --> WAR
+    WAR --> JVM
+    JVM --> JDBCDriver
+    JDBCDriver -- "TCP/IP Connection (Port 3306)<br/>SQL Queries & PreparedStatements" --> MySQL

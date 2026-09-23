@@ -1,0 +1,23 @@
+flowchart TD
+    Start([Start: Search Station]) --> SelectStation[Select Station from Search Results]
+    SelectStation --> ViewDetails[Inspect Station Details & Connector Types]
+    ViewDetails --> ChooseSlot[Choose Date, Preferred Time & Slot Bay]
+    ChooseSlot --> CheckAvail{Is Selected Slot Available?}
+
+    CheckAvail -- No: Occupied --> ShowUnavailable[Display 'Slot Unavailable' Alert]
+    ShowUnavailable --> PromptWait[Prompt 'Join Waiting List']
+    PromptWait --> JoinWait[User Joins Waiting List Queue]
+    JoinWait --> WaitEnd([End: Added to Waiting List])
+
+    CheckAvail -- Yes: Free --> Checkout[Proceed to Payment Checkout Summary]
+    Checkout --> HasCoupon{Apply Promo Coupon?}
+    HasCoupon -- Yes --> ValidateCoupon[Validate Coupon Code in DB]
+    ValidateCoupon --> ApplyDiscount[Calculate Discount & Update Total]
+    HasCoupon -- No --> SelectPayMethod[Select Simulated Payment Method: UPI / Card / Wallet]
+    ApplyDiscount --> SelectPayMethod
+
+    SelectPayMethod --> SubmitPay[Click 'Pay' Button]
+    SubmitPay --> GenTxn[Generate Fake Transaction ID & Booking Number]
+    GenTxn --> SaveRecords[Persist Booking & Payment in MySQL]
+    SaveRecords --> ShowConfirm[Display Booking Confirmation Screen]
+    ShowConfirm --> SuccessEnd([End: Slot Reserved Successfully])

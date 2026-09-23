@@ -1,0 +1,33 @@
+graph TD
+    User["EV User"]
+    P31["3.1 Validate Slot Availability"]
+    P32["3.2 Queue in Waiting List"]
+    P41["4.1 Validate Promo Coupon"]
+    P42["4.2 Process Simulated Payment"]
+    P43["4.3 Issue Booking Confirmation"]
+
+    D2[("D2: Charging Slots")]
+    D3[("D3: Bookings")]
+    D3W[("D3W: Waiting List")]
+    D4C[("D4C: Coupons")]
+    D4P[("D4P: Payments")]
+
+    User -- "Select Station, Date, Time, Slot" --> P31
+    P31 -- "Check status & conflict" --> D2
+    P31 -- "Check existing reservations" --> D3
+
+    P31 -- "Slot Occupied" --> P32
+    P32 -- "Store queued request" --> D3W
+    P32 -- "Queue Acknowledgement" --> User
+
+    P31 -- "Slot Available" --> P41
+    User -- "Enter Promo Code" --> P41
+    P41 -- "Verify code & compute discount" --> D4C
+
+    P41 -- "Net Payable Amount" --> P42
+    User -- "Select UPI / Card / Wallet" --> P42
+    P42 -- "Generate Fake TXN ID" --> D4P
+    P42 -- "Record BOOKED status" --> D3
+
+    P42 --> P43
+    P43 -- "Booking ID & Receipt" --> User

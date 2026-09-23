@@ -1,0 +1,33 @@
+sequenceDiagram
+    autonumber
+    actor Driver as EV User
+    participant View as JSP (book-slot / payment)
+    participant BServlet as BookingServlet
+    participant PServlet as PaymentServlet
+    participant BDAO as BookingDAO
+    participant CDAO as CouponDAO
+    participant PDAO as PaymentDAO
+    participant DB as MySQL Database
+
+    Driver->>View: Select Date, Time & Slot
+    View->>BServlet: POST /booking (stationId, slotId, date, time)
+    BServlet->>BDAO: isSlotAvailable(slotId, date, time)
+    BDAO->>DB: SELECT id FROM bookings WHERE slot_id=? AND date=?
+    DB-->>BDAO: No conflicting booking
+    BDAO-->>BServlet: Slot is AVAILABLE
+    BServlet->>Driver: Forward to /payment.jsp (Original Amount)
+
+    Driver->>View: Enter Coupon "EV10" & Click Apply
+    View->>CDAO: getByCode("EV10")
+    CDAO->>DB: SELECT * FROM coupons WHERE code='EV10'
+    DB-->>CDAO: 10% Discount Valid
+    View->>Driver: Display Discount & Net Final Amount
+
+    Driver->>PServlet: POST /payment (method="UPI")
+    PServlet->>BDAO: createBooking(booking)
+    BDAO->>DB: INSERT INTO bookings ... status='BOOKED'
+    DB-->>BDAO: Generated bookingId
+    PServlet->>PDAO: createPayment(fakeTxnId, amount, "UPI")
+    PDAO->>DB: INSERT INTO payments ... status='SUCCESS'
+    DB-->>PDAO: Payment Saved
+    PServlet-->>Driver: Redirect to /booking-confirmation (Show Booking & Txn ID)

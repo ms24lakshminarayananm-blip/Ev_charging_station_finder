@@ -1,0 +1,14 @@
+graph LR
+    User["EV User"]
+    Owner["Station Owner"]
+    Admin["System Administrator"]
+    System[("0.0<br/>EV Charging Station<br/>Finder System")]
+
+    User -- "Search queries, slot bookings, coupon codes, simulated payment, reviews" --> System
+    System -- "Station listings, slot availability, booking receipt, confirmation" --> User
+
+    Owner -- "Station specs, bay configurations, tariffs, slot status" --> System
+    System -- "Booking notifications, reservation logs, revenue summary" --> Owner
+
+    Admin -- "Station approval/rejection decisions, moderation commands" --> System
+    System -- "System analytics, pending stations, user logs, moderation reports" --> Admin
