@@ -193,3 +193,4 @@ The project comes pre-seeded with test accounts for all 3 system actors:
 4. Click **✓ Approve**.
 5. The station status changes immediately to **APPROVED** &rarr; it now appears in public search for EV Users!
 6. View registered users, station owners, all system bookings, and delete unwanted reviews.
+"# Ev_charging_station_finder" 
